@@ -15,5 +15,10 @@ output "domain" {
 
 output "website_endpoint" {
   description = "Website endpoint URL"
-  value       = aws_s3_bucket_website_configuration.s3_bucket.website_endpoint
+  value       = "http://${aws_s3_bucket_website_configuration.s3_bucket.website_endpoint}/index.html"
+}
+
+output "error_endpoint" {
+  description = "Error page URL"
+  value       = "http://${aws_s3_bucket_website_configuration.s3_bucket.website_endpoint}/error.html"
 }

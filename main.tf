@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-west-2"
+  region = "us-east-2"
 }
 
 resource "aws_s3_bucket" "s3_bucket" {
@@ -67,7 +67,7 @@ resource "aws_s3_bucket_policy" "s3_bucket" {
     ]
   })
 
-  depends_on = [ aws_s3_bucket_public_access_block.s3_bucket ]
+  depends_on = [aws_s3_bucket_public_access_block.s3_bucket]
 }
 
 resource "aws_s3_object" "index" {
@@ -75,8 +75,6 @@ resource "aws_s3_object" "index" {
   key          = "index.html"
   source       = "www/index.html"
   content_type = "text/html"
-
-  etag = filemd5("www/index.html")
 }
 
 resource "aws_s3_object" "error" {
@@ -84,6 +82,4 @@ resource "aws_s3_object" "error" {
   key          = "error.html"
   source       = "www/error.html"
   content_type = "text/html"
-
-  etag = filemd5("www/error.html")
 }
