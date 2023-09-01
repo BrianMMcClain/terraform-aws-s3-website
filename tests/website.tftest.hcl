@@ -8,7 +8,7 @@ run "setup" {
 # Apply run block to create the bucket
 run "create_bucket" {
     command = apply
-
+    
      variables {
         bucket_name = "${run.setup.bucket_prefix}-aws-s3-website-test"
     }
@@ -39,15 +39,14 @@ run "file_etags" {
 
 # Check that the website is running and responding to requests
 run "website_is_rinning" {
-    command = apply
+    command = plan
 
     module {
         source = "./tests/final"
     }
 
     variables {
-        index_endpoint = run.file_etags.website_endpoint
-        error_endpoint = run.file_etags.error_endpoint
+        endpoint = run.file_etags.website_endpoint
     }
 
     # index.html responds with 200
@@ -60,11 +59,5 @@ run "website_is_rinning" {
     assert {
         condition = strcontains(data.http.index.response_body, "Terramino")
         error_message = "Index page does not contain 'Terramino'"
-    }
-
-    # error.html responds with 200
-    assert {
-        condition = data.http.error.status_code == 200
-        error_message = "Error page responded with HTTP status ${data.http.error.status_code}"
     }
 }

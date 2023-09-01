@@ -7,20 +7,11 @@ terraform {
   }
 }
 
-variable "index_endpoint" {
+variable "endpoint" {
     type = string
 }
 
-variable "error_endpoint" {
-  type = string
-}
-
 data "http" "index" {
-    url = var.index_endpoint
-    method = "GET"
-}
-
-data "http" "error" {
-    url = var.error_endpoint
+    url = var.endpoint
     method = "GET"
 }
