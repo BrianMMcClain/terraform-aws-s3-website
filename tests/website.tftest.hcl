@@ -12,13 +12,8 @@ run "create_bucket" {
      variables {
         bucket_name = "${run.setup.bucket_prefix}-aws-s3-website-test"
     }
-}
 
-# Check the S3 bucket name
-run "check_bucket_name" {
-    command = plan
-
-    # Check that the bucket name matches what we expect
+    # Check that the bucket name is correct
     assert {
         condition = aws_s3_bucket.s3_bucket.bucket == "${run.setup.bucket_prefix}-aws-s3-website-test"
         error_message = "Invalid bucket name. Wanted ${run.setup.bucket_prefix}-aws-s3-website-test, got ${aws_s3_bucket.s3_bucket.bucket}"

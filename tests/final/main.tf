@@ -1,5 +1,3 @@
-
-
 terraform {
   required_providers {
     http = {
@@ -7,6 +5,14 @@ terraform {
       version = "3.4.0"
     }
   }
+}
+
+variable "index_endpoint" {
+    type = string
+}
+
+variable "error_endpoint" {
+  type = string
 }
 
 data "http" "index" {
